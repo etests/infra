@@ -3,6 +3,7 @@ kind: Ingress
 metadata:
   name: etests-django
   annotations:
+    kubernetes.io/ingress.global-static-ip-name: etests-django
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
