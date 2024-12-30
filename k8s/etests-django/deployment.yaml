@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: etests-django-deployment
+  name: etests-django
   labels:
     app: etests-django
 spec:
@@ -19,12 +19,6 @@ spec:
           image: piyushmaurya/etests-django:latest
           ports:
             - containerPort: 8000
-          env:
-            - name: SECRET_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: etests-django-secrets
-                  key: secret-key
           resources:
             limits:
               memory: "512Mi"
