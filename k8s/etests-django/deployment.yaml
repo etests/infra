@@ -17,6 +17,11 @@ spec:
       containers:
         - name: etests-django
           image: piyushmaurya/etests-django:latest
+          envFrom:
+            - configMapRef:
+                name: etests-config
+            - secretRef:
+                name: etests-secret
           ports:
             - containerPort: 8000
           resources:
