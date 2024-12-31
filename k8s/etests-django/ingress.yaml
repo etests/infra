@@ -4,16 +4,12 @@ metadata:
   name: etests-django
   annotations:
     kubernetes.io/ingress.global-static-ip-name: etests-django
+    networking.gke.io/managed-certificates: managed-cert
+    kubernetes.io/ingress.class: "gce"
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
-  rules:
-    - host: etests.co.in
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: etests-django
-                port:
-                  number: 80
+  defaultBackend:
+    service:
+      name: etests-django
+      port:
+        number: 80
