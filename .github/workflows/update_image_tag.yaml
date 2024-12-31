@@ -1,0 +1,32 @@
+name: Update Image Tag
+
+on:
+  repository_dispatch:
+    types: [update-image-tag]
+
+jobs:
+  update-deployment:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the repository
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      # Parse the new image tag from the webhook payload
+      - name: Extract Image Tag
+        id: extract
+        run: echo "image_tag=${{ github.event.client_payload.image_tag }}" >> $GITHUB_ENV
+
+      # Update the Deployment YAML with the new image tag
+      - name: Update Deployment YAML
+        run: |
+          sed -i "s|image: piyushmaurya/etests-django:.*|image: piyushmaurya/etests-django:${{ env.image_tag }}|" k8s/etests-django/deployment.yaml
+
+      # Commit and push the change
+      - name: Commit and Push Changes
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git commit -am "Update image tag to ${{ env.image_tag }}"
+          git push
