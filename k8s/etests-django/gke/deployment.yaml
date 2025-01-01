@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: etests-django
+  labels:
+    app: etests-django
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: etests-django
+  template:
+    metadata:
+      labels:
+        app: etests-django
+    spec:
+      containers:
+        - name: etests-django
+          image: piyushmaurya/etests-django:latest
+          envFrom:
+            - configMapRef:
+                name: etests-config
+            - secretRef:
+                name: etests-secret
+          ports:
+            - containerPort: 8000
+          resources:
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+            requests:
+              memory: "256Mi"
+              cpu: "250m"
