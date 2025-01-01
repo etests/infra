@@ -26,3 +26,12 @@ hpa:
   minReplicas: 2
   maxReplicas: 5
   cpuUtilization: 50
+
+ingress:
+  enabled: true
+  type: minikube
+  class: nginx
+  host: localhost
+
+managedCert:
+  supported: false

@@ -7,10 +7,11 @@ metadata:
     app: {{ .Chart.Name }}
   annotations:
     kubernetes.io/ingress.class: {{ .Values.ingress.class }}
-    nginx.ingress.kubernetes.io/rewrite-target: /
     {{- if eq .Values.ingress.type "gke" }}
-    kubernetes.io/ingress.global-static-ip-name: "{{ .Values.ingress.gke.staticIpName }}"
-    networking.gke.io/managed-certificates: "{{ .Values.ingress.gke.managedCert }}"
+    kubernetes.io/ingress.global-static-ip-name: {{ .Values.ingress.gke.staticIpName }}
+    networking.gke.io/managed-certificates: {{ .Values.ingress.gke.managedCert }}
+    {{ else }}
+    nginx.ingress.kubernetes.io/rewrite-target: /
     {{- end }}
 spec:
   {{- if eq .Values.ingress.type "gke" }}

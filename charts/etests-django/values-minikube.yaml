@@ -1,7 +1,0 @@
-ingress:
-  enabled: true
-  type: minikube
-  class: nginx
-  host: localhost
-service:
-  port: 80
