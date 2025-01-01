@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: etests-django
-          image: piyushmaurya/etests-django:8f9817262c60a02c72b6ebeb587b4c791a736bad
+          image: piyushmaurya/etests-django:latest
           envFrom:
             - configMapRef:
                 name: etests-config
