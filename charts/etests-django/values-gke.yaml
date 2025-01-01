@@ -1,0 +1,10 @@
+ingress:
+  enabled: true
+  type: gke
+  class: gce
+  host: etests.co.in
+  gke:
+    staticIpName: etests-django
+    managedCert: managed-cert
+service:
+  port: 80

@@ -1,0 +1,35 @@
+{{- if .Values.ingress.enabled }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ .Chart.Name }}
+  labels:
+    app: {{ .Chart.Name }}
+  annotations:
+    kubernetes.io/ingress.class: {{ .Values.ingress.class }}
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    {{- if eq .Values.ingress.type "gke" }}
+    kubernetes.io/ingress.global-static-ip-name: "{{ .Values.ingress.gke.staticIpName }}"
+    networking.gke.io/managed-certificates: "{{ .Values.ingress.gke.managedCert }}"
+    {{- end }}
+spec:
+  {{- if eq .Values.ingress.type "gke" }}
+  defaultBackend:
+    service:
+      name: {{ .Chart.Name }}
+      port:
+        number: {{ .Values.service.port }}
+  {{- else }}
+  rules:
+    - host: {{ .Values.ingress.host }}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ .Chart.Name }}
+                port:
+                  number: {{ .Values.service.port }}
+  {{- end }}
+{{- end }}

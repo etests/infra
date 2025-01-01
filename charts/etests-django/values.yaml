@@ -1,0 +1,38 @@
+replicaCount: 3
+
+image:
+  repository: piyushmaurya/etests-django
+  versionTag: latest
+
+configMapName: etests-config
+secretName: etests-secret
+
+containerPort: 8000
+
+service:
+  port: 80
+  targetPort: 8000
+  type: ClusterIP
+
+resources:
+  limits:
+    memory: "512Mi"
+    cpu: "500m"
+  requests:
+    memory: "256Mi"
+    cpu: "250m"
+
+hpa:
+  minReplicas: 2
+  maxReplicas: 5
+  cpuUtilization: 50
+
+ingress:
+  enabled: true
+  class: nginx
+  host: localhost
+  tlsSecretName: etests-django
+  type: nginx
+  gke:
+    staticIpName: ""
+    managedCert: ""
