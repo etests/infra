@@ -21,8 +21,11 @@ jobs:
       # Update the Deployment YAML with the new image tag
       - name: Update Deployment YAML
         run: |
-          sed -i "s|versionTag: .*|versionTag: ${{ env.image_tag }}|" charts/etests-django/values.yaml
-
+          for file in charts/etests-django/values*; do
+              if [ -f "$file" ]; then
+                  sed -i "s|versionTag: .*|versionTag: ${{ env.image_tag }}|" "$file"
+              fi
+          done
       # Commit and push the change
       - name: Commit and Push Changes
         run: |
