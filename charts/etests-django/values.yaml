@@ -2,7 +2,7 @@ replicaCount: 3
 
 image:
   repository: piyushmaurya/etests-django
-  versionTag: 509ae5cd57f11ef292a060c5750edd6992775c88
+  versionTag: 78be58f90ff9aba1b0b628360a02f04a16abaa2f
 
 configMapName: etests-config
 secretName: etests-secret
